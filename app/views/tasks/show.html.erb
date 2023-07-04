@@ -1,2 +1,5 @@
-<h1>Tasks#show</h1>
-<p>Find me in app/views/tasks/show.html.erb</p>
+<h1>タスク詳細</h1>
+<p>タスク：<%= @task.title %></p>
+<p>概要：<%= @task.content %></p>
+
+<%= link_to "タスク一覧へ", tasks_path %>
