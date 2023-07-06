@@ -11,7 +11,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成済みのタスク一覧が表示される' do
         FactoryBot.create(:task, name: 'task')
         visit tasks_path
-        expect(page).to have_content 'task'
+        expect(page).to have_content 'task_failure'
       end
     end
   end
