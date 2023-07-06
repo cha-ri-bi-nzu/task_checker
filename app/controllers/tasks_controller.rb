@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  before_action :set_url, only: %i[new create edit update]
+  # before_action :set_url, only: %i[new create edit update]
 
   def index
     @tasks = Task.all
@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to @url, notice: "更新完了しました"
+      redirect_to task_path(@task), notice: "更新完了しました"
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def set_url
-    @url = request.referer
-  end
+  # def set_url
+  #   @url = request.referer
+  # end
 end
