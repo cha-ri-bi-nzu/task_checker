@@ -1,7 +1,7 @@
-<%= form_with(model: @task, local: true, url: @url) do |f| %>
+<%= form_with(model: @task, local: true) do |f| %>
   <div>
     <%= f.label :"タスク：" %>
-    <%= f.text_field :title %>
+    <%= f.text_field :name %>
     <br>
     <br>
     <%= f.label :" 概要 ：" %>
