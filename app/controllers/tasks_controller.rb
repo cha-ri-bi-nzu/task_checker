@@ -27,7 +27,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to task_path(task_params), notice: "更新完了しました"
+      redirect_to @url, notice: "更新完了しました"
     else
       render :edit
     end
