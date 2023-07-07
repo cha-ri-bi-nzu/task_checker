@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
     context 'タスクを新規作成した場合' do
@@ -18,6 +19,11 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, name: 'task')
         visit tasks_path
         expect(page).to have_content 'task'
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        task_list = all('.task_row')
       end
     end
   end
