@@ -15,7 +15,7 @@
   <br>
   
   ### Taskテーブル
-  | id |      title     |    content   | status | priority |   time_limit   | user_id | label_id  |
+  | id |      name     |    content   | status | priority |   time_limit   | user_id | label_id  |
   |:--:|:---------------|:-------------|:-------|:---------|:---------------|:-------:|:---------:|
   |  1 | テーブル定義    | hogehogehoge | 未着手 |   最優先  | 2023/7/20/15:00 |    2   |      4    |
   |  2 | 要件定義       | hogehogehoge |  完了  |    優先   | 2023/7/17/15:00 |    2   |      6    |
