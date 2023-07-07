@@ -1,0 +1,17 @@
+<%= form_with(model: @task, local: true, url: @url) do |f| %>
+  <div>
+    <%= f.label :"タスク：" %>
+    <%= f.text_field :name %>
+    <br>
+    <br>
+    <%= f.label :" 概要 ：" %>
+    <%= f.text_area :content %>
+  </div>
+  <br>
+  <br>
+  <% if @task.id.present? %>
+    <%= f.submit :"更新" %>
+  <% else %>
+    <%= f.submit :"登録" %>
+  <% end %>
+<% end %>

@@ -11,6 +11,11 @@
   </head>
 
   <body>
+    <div>
+    <% flash.each do |key, value| %>
+      <h3><%= content_tag(:div, value, class: "#{key}") %></h3>
+    <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
