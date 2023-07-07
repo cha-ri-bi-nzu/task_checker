@@ -11,6 +11,8 @@
   </head>
 
   <body>
+    <br>
+    <%= t('view.sample') %>
     <div>
     <% flash.each do |key, value| %>
       <h3><%= content_tag(:div, value, class: "#{key}") %></h3>
