@@ -40,3 +40,10 @@
   |  2 |     1   |      2    |
   |  3 |     3   |      3    |
   |  4 |     7   |      1    |
+
+
+以下のコマンドを使って、step2ブランチの変更内容をHerokuのmasterブランチに反映する
+
+````
+$ git push heroku step2:master
+````
