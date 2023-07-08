@@ -3,8 +3,8 @@ class TasksController < ApplicationController
   # before_action :set_url, only: %i[new create edit update]
 
   def index
-    @tasks = Task.all
-  end
+    @tasks = Task.all.order(created_at: :desc)
+    end
 
   def new
     @task = Task.new
