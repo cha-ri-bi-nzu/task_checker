@@ -16,14 +16,19 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        FactoryBot.create(:task, name: 'task')
+        FactoryBot.create(:task, name: 'name', content: 'content')
         visit tasks_path
-        expect(page).to have_content 'task'
+        expect(page).to have_content 'name'
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
+        FactoryBot.create(:task, id: 1, name: 'name1', content: 'content4', created_at: Time.current + 1.day)
+        FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day)
+        FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day)
+        visit tasks_path
         task_list = all('.task_row')
+        expect(task_list.first).to have_content "name5"
       end
     end
   end

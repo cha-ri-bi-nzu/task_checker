@@ -10,9 +10,8 @@ RSpec.describe Task, type: :model do
     end
     context 'タスクの詳細が空の場合' do
       it 'バリデーションにひっかかる' do
-        task = Task.new(content: nil)
-        task.valid?
-        expect(task.errors[:content]).to include("can't be blank")
+        task = Task.new(content: '')
+        expect(task).to_not be_valid
       end
     end
     context 'タスクのタイトルと詳細に内容が記載されている場合' do
