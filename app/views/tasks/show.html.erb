@@ -1,5 +1,6 @@
 <h1>タスク詳細</h1>
 <p>タスク：<%= @task.name %></p>
+<p>終了期限：<%= @task.time_limit %></p>
 <p>概要：<%= @task.content %></p>
 
 <%= link_to "編集", edit_task_path %> | 
