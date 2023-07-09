@@ -3,8 +3,14 @@ class TasksController < ApplicationController
   # before_action :set_url, only: %i[new create edit update]
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    if params[:create_new_sort]
+      @tasks = Task.create_new_sort
+    elsif params[:time_limit_sort]
+      @tasks = Task.time_limit_sort
+    else
+      @tasks = Task.all.order(created_at: :desc)
     end
+  end
 
   def new
     @task = Task.new
