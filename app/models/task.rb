@@ -3,5 +3,5 @@ class Task < ApplicationRecord
   validates :content, presence: true
 
   scope :create_new_sort, -> {order(created_at: :desc)}
-  scope :time_limit_sort, -> {order(created_at: :asc)}
+  scope :time_limit_sort, -> {order(time_limit: :asc)}
 end
