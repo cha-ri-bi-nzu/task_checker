@@ -27,8 +27,8 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day)
         FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day)
         visit tasks_path
-        task_list = all('.task_row')
-        expect(task_list.first).to have_content "name5"
+        task_list_f = first('.task_row')
+        expect(task_list_f).to have_content "name5"
       end
     end
   end
