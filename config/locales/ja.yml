@@ -182,3 +182,9 @@ ja:
       dates: "%Y/%m/%d"
       times: "%H:%M"
     pm: 午後
+  enums:
+    rating:
+      rate:
+        not_started: 未着手
+        underway: 着手中
+        complete: 完了

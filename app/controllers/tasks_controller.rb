@@ -7,7 +7,7 @@ class TasksController < ApplicationController
       @tasks = Task.create_new_sort
     elsif params[:time_limit_sort]
       @tasks = Task.time_limit_sort
-    else
+    elseif
       @tasks = Task.all.order(created_at: :desc)
     end
   end
