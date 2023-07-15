@@ -18,6 +18,9 @@
     <%= f.datetime_field :time_limit %>
     <br>
     <br>
+    <%= f.select :status, select_from_enum(Task, :status) %>
+    <br>
+    <br>
     <%= f.label :" 概要 ：" %>
     <%= f.text_area :content %>
   </div>

@@ -1,16 +1,6 @@
 <h1>タスク一覧</h1>
 
-<%= form_with(model: @tasks, local: true) do |f| %>
-  <% if @tasks.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= @tasks.errors.count %>件のエラーがあります。</h2>
-      <ul>
-        <% @tasks.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with(model: @tasks, local: true, url: tasks_path, method: :get, scope: :task) do |f| %>
   <table>
     <tr>
       <th>タスク</th>
@@ -21,14 +11,19 @@
     <div>
       <%= link_to "作成日新しい順", tasks_path(create_new_sort: "true") %> | 
       <%= link_to "終了期限近い順", tasks_path(time_limit_sort: "true") %>  
-      <%= f.select :status, select_from_enum(Task, :status) %>  
-      <%= f.submit "進捗絞り込み", tasks_path(status_choose: "true") %>
     </div>
+    <div>
+      <%= f.label :"タスク：" %>
+      <%= f.text_field :name, value: "", placeholder: "タスク名" %>
+      <%= f.select :status, select_from_enum(Task, :status), include_blank: true %>  
+      <%= f.submit "絞り込み" %>
+    </div>
+    <br>
     <% @tasks.each do |task| %>
       <tr>
         <td class="task_row"><%= task.name %></td>
         <td><%= l task.time_limit, format: :short %></td>
-        <td class="task_status"><%= status_h[:"#{task.status}"] %></td>
+        <td class="task_status"><%= task.status %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
         <td><%= link_to '編集', edit_task_path(task.id) %></td>
         <td><%= link_to '削除', task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></td>

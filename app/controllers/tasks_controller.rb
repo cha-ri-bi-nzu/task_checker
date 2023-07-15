@@ -3,12 +3,22 @@ class TasksController < ApplicationController
   # before_action :set_url, only: %i[new create edit update]
 
   def index
+    @tasks = Task.all.order(created_at: :desc)
     if params[:create_new_sort]
       @tasks = Task.create_new_sort
     elsif params[:time_limit_sort]
       @tasks = Task.time_limit_sort
-    elseif
-      @tasks = Task.all.order(created_at: :desc)
+    end
+    # binding.pry
+    if params[:task].present?
+      if params[:task][:name].present? && params[:task][:status].present?
+        @tasks = @tasks.status_select(params[:task][:status])
+        @tasks = @tasks.name_select(params[:task][:name])
+      elsif params[:task][:status].present?
+        @tasks = @tasks.status_select(params[:task][:status])
+      elsif params[:task][:name].present?
+        @tasks = @tasks.name_select(params[:task][:name])
+      end
     end
   end
 
@@ -46,7 +56,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :time_limit, :content)
+    params.require(:task).permit(:name, :time_limit, :status, :content)
   end
 
   def set_task
