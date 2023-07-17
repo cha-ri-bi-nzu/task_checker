@@ -8,6 +8,8 @@ class TasksController < ApplicationController
       @tasks = Task.create_new_sort
     elsif params[:time_limit_sort]
       @tasks = Task.time_limit_sort
+    elsif params[:high_priority_sort]
+      @tasks = Task.high_priority_sort
     end
     # binding.pry
     if params[:task].present?
@@ -56,7 +58,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :time_limit, :status, :content)
+    params.require(:task).permit(:name, :time_limit, :status, :priority, :content)
   end
 
   def set_task
