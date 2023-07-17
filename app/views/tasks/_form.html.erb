@@ -22,6 +22,10 @@
     <%= f.select :status, select_from_enum(Task, :status) %>
     <br>
     <br>
+    <%= f.label :"優先度：" %>
+    <%= f.select :priority, select_from_enum(Task, :priority) %>
+    <br>
+    <br>
     <%= f.label :" 概要 ：" %>
     <%= f.text_area :content %>
   </div>

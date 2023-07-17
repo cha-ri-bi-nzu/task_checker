@@ -6,11 +6,13 @@
       <th>タスク</th>
       <th>終了期限</th>
       <th>進捗</th>
+      <th>優先度</th>
       <th colspan="3"></th>
     </tr>
     <div>
       <%= link_to "作成日新しい順", tasks_path(create_new_sort: "true") %> | 
-      <%= link_to "終了期限近い順", tasks_path(time_limit_sort: "true") %>  
+      <%= link_to "終了期限近い順", tasks_path(time_limit_sort: "true") %> | 
+      <%= link_to "優先度高い順", tasks_path(high_priority_sort: "true") %>
     </div>
     <div>
       <%= f.label :"タスク：" %>
@@ -24,6 +26,7 @@
         <td class="task_row"><%= task.name %></td>
         <td><%= l task.time_limit, format: :short %></td>
         <td class="task_status"><%= task.status %></td>
+        <td class="task_priority"><%= task.priority %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
         <td><%= link_to '編集', edit_task_path(task.id) %></td>
         <td><%= link_to '削除', task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></td>
