@@ -18,6 +18,7 @@
     <%= f.datetime_field :time_limit %>
     <br>
     <br>
+    <%= f.label :"進捗：" %>
     <%= f.select :status, select_from_enum(Task, :status) %>
     <br>
     <br>
