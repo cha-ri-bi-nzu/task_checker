@@ -5,15 +5,22 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
+        # sleep(1)
         fill_in "task[name]", with: 'task_name'
         fill_in "task[content]", with: 'content_1'
         click_button "登録"
-        expect('task_name').to have_content 'name'
-        expect('content_1').to have_content 'content'
+        # binding.pry
+        expect(page).to have_content 'task_name'
+        expect(page).to have_content '未着手'
       end
     end
   end
   describe '一覧表示機能' do
+    before do
+      # 必要に応じて、テストデータの内容を変更して構わない
+      FactoryBot.create(:task, name: "task")
+      FactoryBot.create(:second_task, name: "sample")
+    end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
         FactoryBot.create(:task, name: 'name', content: 'content')
@@ -39,6 +46,44 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content 'name'
+      end
+    end
+  end
+  describe '検索機能' do
+    before do
+      # 必要に応じて、テストデータの内容を変更して構わない
+      FactoryBot.create(:task, name: "task_name1", status: "未着手")
+      FactoryBot.create(:second_task, name: "sample", status: "着手中")
+      FactoryBot.create(:third_task, name: "sample_2", status: "完了")
+    end
+    context 'タイトルであいまい検索をした場合' do
+      it "検索キーワードを含むタスクで絞り込まれる" do
+        visit tasks_path
+        # タスクの検索欄に検索ワードを入力する (例: task)
+        fill_in "task[name]", with: 'as'
+        # 検索ボタンを押す
+        click_button "絞り込み"
+        expect(page).to have_content '未着手'
+      end
+    end
+    context 'ステータス検索をした場合' do
+      it "ステータスに完全一致するタスクが絞り込まれる" do
+        # ここに実装する
+        visit tasks_path
+        # プルダウンを選択する「select」について調べてみること
+        select "着手中", from: 'task[status]'
+        # binding.pry
+        click_button "絞り込み"
+        expect(page).to have_content '着手中'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+        visit tasks_path
+        fill_in "task[name]", with: 'ple'
+        select "完了", from: 'task[status]'
+        click_button "絞り込み"
+        expect(page).to have_content 'sample_2'
       end
     end
   end
