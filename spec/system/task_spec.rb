@@ -45,8 +45,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'ソート機能' do
     before do
       # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 3.day, priority: "中", created_at: Time.current + 1.day)
-      FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 7.day, priority: "低", created_at: Time.current + 2.day)
+      FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 7.day, priority: "中", created_at: Time.current + 1.day)
+      FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 3.day, priority: "低", created_at: Time.current + 2.day)
       FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 5.day, priority: "高", created_at: Time.current + 3.day)
     end
     context '作成日時でソートをした場合' do
@@ -58,9 +58,9 @@ RSpec.describe 'タスク管理機能', type: :system do
       end
     end
     context '終了期限でソートをした場合' do
-      it "終了期限の最も近いタスクが一番上に表示される" do
+      it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
-        click_link "終了期限近い順"
+        click_link "終了期限遠い順"
         task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "t_s_n"
       end
