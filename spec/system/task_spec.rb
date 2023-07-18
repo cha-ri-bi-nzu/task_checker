@@ -6,12 +6,14 @@ RSpec.describe 'タスク管理機能', type: :system do
       it '作成したタスクが表示される' do
         visit new_task_path
         # sleep(1)
-        fill_in "task[name]", with: 'task_name'
-        fill_in "task[content]", with: 'content_1'
+        fill_in "task_name", with: 'task_name'
+        fill_in "task_content", with: 'content_1'
+        fill_in "task_time_limit", with: '2023-07-18T10:30'
         click_button "登録"
         # binding.pry
         expect(page).to have_content 'task_name'
         expect(page).to have_content '未着手'
+        expect(page).to have_content '07/18 10:30'
         expect(page).to have_content '高'
       end
     end
@@ -35,7 +37,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day)
         FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day)
         visit tasks_path
-        task_list_f = first('.task_names')
+        task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "name5"
       end
     end
@@ -51,7 +53,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "新しいタスクが一番上に表示される" do
         visit tasks_path
         click_link "作成日新しい順"
-        task_list_f = first('.task_names')
+        task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "sample_2"
       end
     end
@@ -59,7 +61,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "終了期限の最も近いタスクが一番上に表示される" do
         visit tasks_path
         click_link "終了期限近い順"
-        task_list_f = first('.task_names')
+        task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "t_s_n"
       end
     end
@@ -67,7 +69,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "終了期限の最も近いタスクが一番上に表示される" do
         visit tasks_path
         click_link "優先度高い順"
-        task_list_f = first('.task_names')
+        task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "sample_2"
       end
     end
