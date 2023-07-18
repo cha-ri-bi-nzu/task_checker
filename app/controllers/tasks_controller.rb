@@ -22,6 +22,8 @@ class TasksController < ApplicationController
         @tasks = @tasks.name_select(params[:task][:name])
       end
     end
+    @tasks = @tasks.page(params[:page]).per(10)
+    @tasks10 = Task.all.page(params[:page]).per(10)
   end
 
   def new
