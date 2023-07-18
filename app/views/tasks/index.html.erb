@@ -23,8 +23,8 @@
     <br>
     <% @tasks.each do |task| %>
       <tr>
-        <td class="task_row"><%= task.name %></td>
-        <td><%= l task.time_limit, format: :short %></td>
+        <td class="task_names"><%= task.name %></td>
+        <td class="task_time_limit"><%= l task.time_limit, format: :short %></td>
         <td class="task_status"><%= task.status %></td>
         <td class="task_priority"><%= task.priority %></td>
         <td><%= link_to '詳細', task_path(task.id) %></td>
