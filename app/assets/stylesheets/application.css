@@ -14,23 +14,15 @@
  *= require_self
  */
 
- body {
+
+  body {
   margin: 0px auto;
   max-width: 900px;
-  min-height: 900px;
+  height: 100%;
 }
-table, div div, h1, h3 {
-  margin-left: 25px;
-}
-th, td {
-  margin-left: 20px;
-}
+
 div{
   background-color: #fffff0;
-}
-
-div div a{
-
 }
 
 header, footer {
@@ -43,12 +35,24 @@ header {
   width: 100%;
 }
 
-header h1 {
+header h1, header a {
   margin: 0px 0px 0px 15px;
   line-height: 70px;
   color: #444;
   text-decoration: none;
 }
+
+table, div div, h1, h3 {
+  margin-left: 25px;
+}
+
+div div a {
+  margin: auto 10px;
+}
+
+.btn a {
+  color: #fff;
+} 
 
 footer {
   height: 50px;

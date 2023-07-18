@@ -1,4 +1,4 @@
-<h1>タスク一覧</h1>
+<h3>タスク一覧</h3>
 
 <%= form_with(model: @tasks, local: true, url: tasks_path, method: :get, scope: :task) do |f| %>
   <table>
@@ -10,8 +10,8 @@
       <th colspan="3"></th>
     </tr>
     <div>
-      <%= link_to "作成日新しい順", tasks_path(create_new_sort: "true") %> | 
-      <%= link_to "終了期限近い順", tasks_path(time_limit_sort: "true") %> | 
+      <%= link_to "作成日新しい順", tasks_path(create_new_sort: "true") %>|
+      <%= link_to "終了期限近い順", tasks_path(time_limit_sort: "true") %>|
       <%= link_to "優先度高い順", tasks_path(high_priority_sort: "true") %>
     </div>
     <div>
@@ -23,18 +23,20 @@
     <br>
     <% @tasks.each do |task| %>
       <tr>
-        <td class="task_names"><%= task.name %></td>
+        <td class="spec_testname"><%= task.name %></td>
         <td class="task_time_limit"><%= l task.time_limit, format: :short %></td>
         <td class="task_status"><%= task.status %></td>
         <td class="task_priority"><%= task.priority %></td>
-        <td><%= link_to '詳細', task_path(task.id) %></td>
-        <td><%= link_to '編集', edit_task_path(task.id) %></td>
-        <td><%= link_to '削除', task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></td>
+        <td><button type="button" class="btn btn-success"><%= link_to '詳細', task_path(task.id) %></button></td>
+        <td><button type="button" class="btn btn-info"><%= link_to '編集', edit_task_path(task.id) %></button></td>
+        <td><button type="button" class="btn btn-danger"><%= link_to '削除', task_path(task.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></button></td>
       </tr>
     <% end %>
   </table>
-  <br>
-  <%= paginate @tasks10 %>
-  <br>
-  <%= link_to "新タスク登録", new_task_path %>
+  <div>
+    <br>
+    <%= paginate @tasks10 %>
+    <br>
+    <%= link_to "新タスク登録", new_task_path %>
+  </div>
 <% end %>
