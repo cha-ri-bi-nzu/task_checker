@@ -97,6 +97,9 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    kaminari (0.17.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.5.2)
       addressable (~> 2.8)
     listen (3.8.0)
@@ -262,6 +265,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jbuilder (~> 2.7)
+  kaminari (~> 0.17.0)
   launchy
   listen (~> 3.3)
   pg (~> 1.1)
