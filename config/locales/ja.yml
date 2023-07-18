@@ -179,4 +179,12 @@ ja:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒 %z"
       long: "%Y/%m/%d %H:%M"
       short: "%m/%d %H:%M"
+      dates: "%Y/%m/%d"
+      times: "%H:%M"
     pm: 午後
+  enums:
+    rating:
+      rate:
+        not_started: 未着手
+        underway: 着手中
+        complete: 完了

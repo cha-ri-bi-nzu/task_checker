@@ -16,9 +16,12 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
+  gem 'pry-rails'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'spring-commands-rspec'
   gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'launchy'
 end
 
 group :development do
@@ -35,3 +38,4 @@ end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rexml'
+gem 'kaminari', '~> 0.17.0'

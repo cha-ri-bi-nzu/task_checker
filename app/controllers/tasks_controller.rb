@@ -4,7 +4,27 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: :desc)
+    if params[:create_new_sort]
+      @tasks = Task.create_new_sort
+    elsif params[:time_limit_sort]
+      @tasks = Task.time_limit_sort
+    elsif params[:high_priority_sort]
+      @tasks = Task.high_priority_sort
     end
+    # binding.pry
+    if params[:task].present?
+      if params[:task][:name].present? && params[:task][:status].present?
+        @tasks = @tasks.status_select(params[:task][:status])
+        @tasks = @tasks.name_select(params[:task][:name])
+      elsif params[:task][:status].present?
+        @tasks = @tasks.status_select(params[:task][:status])
+      elsif params[:task][:name].present?
+        @tasks = @tasks.name_select(params[:task][:name])
+      end
+    end
+    @tasks = @tasks.page(params[:page]).per(10)
+    @tasks10 = Task.all.page(params[:page]).per(10)
+  end
 
   def new
     @task = Task.new
@@ -40,7 +60,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :content)
+    params.require(:task).permit(:name, :time_limit, :status, :priority, :content)
   end
 
   def set_task

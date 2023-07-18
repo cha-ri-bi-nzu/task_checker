@@ -11,3 +11,6 @@ ja:
     # user_name: ユーザー名
     # label: ラベル
     # label_name: ラベル
+    not_started: 未着手
+    underway: 着手中
+    complete: 完了
