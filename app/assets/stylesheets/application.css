@@ -13,3 +13,49 @@
  *= require_tree .
  *= require_self
  */
+
+ body {
+  margin: 0px auto;
+  max-width: 900px;
+  min-height: 900px;
+}
+table, div div, h1, h3 {
+  margin-left: 25px;
+}
+th, td {
+  margin-left: 20px;
+}
+div{
+  background-color: #fffff0;
+}
+
+div div a{
+
+}
+
+header, footer {
+  background-color: #faa;
+}
+
+header {
+  margin-top: 15px;
+  height: 70px;
+  width: 100%;
+}
+
+header h1 {
+  margin: 0px 0px 0px 15px;
+  line-height: 70px;
+  color: #444;
+  text-decoration: none;
+}
+
+footer {
+  height: 50px;
+  text-align: center;
+}
+
+footer a {
+  color: #444;
+  text-decoration: none;
+}
