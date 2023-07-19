@@ -25,7 +25,11 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
-    
+    if @user.update(users_params)
+      redirect_to user_path, notice: "プロフィール編集完了"
+    else
+      render :edit
+    end
   end
 
   def destroy
