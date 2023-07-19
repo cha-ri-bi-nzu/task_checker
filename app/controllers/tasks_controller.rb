@@ -3,13 +3,13 @@ class TasksController < ApplicationController
   # before_action :set_url, only: %i[new create edit update]
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = task_all.create_new_sort
     if params[:create_new_sort]
-      @tasks = Task.create_new_sort
+      @tasks = @tasks.create_new_sort
     elsif params[:time_limit_sort]
-      @tasks = Task.time_limit_sort
+      @tasks = @tasks.time_limit_sort
     elsif params[:high_priority_sort]
-      @tasks = Task.high_priority_sort
+      @tasks = @tasks.high_priority_sort
     end
     # binding.pry
     if params[:task].present?
@@ -23,7 +23,7 @@ class TasksController < ApplicationController
       end
     end
     @tasks = @tasks.page(params[:page]).per(10)
-    @tasks10 = Task.all.page(params[:page]).per(10)
+    @tasks10 = task_all.page(params[:page]).per(10)
   end
 
   def new
@@ -65,6 +65,10 @@ class TasksController < ApplicationController
 
   def set_task
     @task = Task.find(params[:id])
+  end
+
+  def task_all
+    Task.select(:id, :name, :time_limit, :status, :priority, :created_at)
   end
 
   # def set_url
