@@ -33,6 +33,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    lost_name = @user.name
+    @user.destroy
+    redirect_to new_user_path, notice: "#{lost_name}さんのアカウントを削除しました"
   end
 
   private
