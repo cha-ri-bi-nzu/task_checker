@@ -1,4 +1,4 @@
-<%= form_with(model: @user, local: true, url: user_path) do |f| %>
+<%= form_with(model: @user, local: true, url: admin_users_path) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
       <h2><%= @user.errors.count %>件のエラーがあります。</h2>
@@ -34,8 +34,6 @@
   <% else %>
     <%= f.submit :"登録" %>
   <% end %>
-  # <% if @user.id == admin %>
-  #   <br>
-  #   <%= link_to "ユーザー一覧へ", users_path %>
-  # <% end %>
+  <br>
+  <%= link_to "ユーザー一覧へ", users_path %>
 <% end %>
