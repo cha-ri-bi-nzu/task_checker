@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
   namespace :admin do
-    get 'uses/index'
-    get 'uses/new'
-    get 'uses/create'
-    get 'uses/show'
-    get 'uses/edit'
-    get 'uses/update'
-    get 'uses/destroy'
+    get 'users/index'
+    get 'users/new'
+    get 'users/create'
+    get 'users/show'
+    get 'users/edit'
+    get 'users/update'
+    get 'users/destroy'
   end
   root "tasks#index"
-  
+
   resources :tasks
   resources :sessions, only: %i[new create destroy]
 
