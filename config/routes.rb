@@ -4,6 +4,6 @@ Rails.application.routes.draw do
   resources :tasks
   resources :sessions, only: %i[new create destroy]
   namespace :admin do
-    resources path :users
+    resources :users
   end
 end
