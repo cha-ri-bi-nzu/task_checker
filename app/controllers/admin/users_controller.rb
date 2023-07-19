@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  before_action :are_you_admin?
   before_action :set_user, only: %i[show edit update destroy]
   before_action :this_user, only: %i[update destroy]
 
@@ -50,5 +51,9 @@ class Admin::UsersController < ApplicationController
 
   def this_user
     this_user = @user.name
+  end
+
+  def are_you_admin?
+    redirect_to tasks_path(@user.id) unless current_user.admin?
   end
 end
