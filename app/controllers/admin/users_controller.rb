@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :this_user, only: %i[update destroy]
 
   def index
     @users = User.select(:id, :name).includes(:tasks)
@@ -27,16 +28,15 @@ class Admin::UsersController < ApplicationController
 
   def update
     if @user.update(users_params)
-      redirect_to user_path, notice: "プロフィール編集完了"
+      redirect_to user_path, notice: "#{this_user}さんのプロフィールを編集しました"
     else
       render :edit
     end
   end
 
   def destroy
-    lost_name = @user.name
     @user.destroy
-    redirect_to users_path, notice: "#{lost_name}さんのアカウントを削除しました"
+    redirect_to users_path, notice: "#{this_user}さんのアカウントを削除しました"
   end
 
   private
@@ -46,5 +46,9 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def this_user
+    this_user = @user.name
   end
 end
