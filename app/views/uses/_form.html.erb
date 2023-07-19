@@ -1,2 +1,41 @@
-<h1>Uses#create</h1>
-<p>Find me in app/views/uses/create.html.erb</p>
+<%= form_with(model: @user, local: true, url: user_path) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :"ユーザー名：" %>
+    <%= f.text_field :name %>
+    <br>
+    <br>
+    <%= f.label :"メールアドレス：" %>
+    <%= f.email_field :email %>
+    <br>
+    <br>
+    <%= f.label :"パスワード：" %>
+    <%= f.password_field :password %>
+    <br>
+    <br>
+    <%= f.label :"パスワード(確認用)：" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <br>
+  <br>
+  <% if @user.id.present? %>
+    <%= f.submit :"更新" %>
+    <br>
+    <%= link_to "プロフィールに戻る", user_path %>
+  <% else %>
+    <%= f.submit :"登録" %>
+  <% end %>
+  # <% if @user.id == admin %>
+  #   <br>
+  #   <%= link_to "ユーザー一覧へ", users_path %>
+  # <% end %>
+<% end %>
