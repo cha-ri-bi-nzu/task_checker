@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  get 'uses/index'
-  get 'uses/new'
-  get 'uses/create'
-  get 'uses/show'
-  get 'uses/edit'
-  get 'uses/update'
-  get 'uses/destroy'
   root "tasks#index"
 
   resources :tasks
