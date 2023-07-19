@@ -1,10 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
 
-  def index
-    @users = User.select(:id, :name).includes(:tasks)
-  end
-
   def new
     @user = User.new
   end
@@ -12,6 +8,7 @@ class UsersController < ApplicationController
   def create
     @user = User.find(params_user)
     if @user.save
+      session[:user_id] = @user.id
       redirect_to user_path(@user.id)
     else
       render :new
@@ -32,11 +29,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    lost_name = @user.name
-    @user.destroy
-    redirect_to new_user_path, notice: "#{lost_name}さんのアカウントを削除しました"
-  end
+  # def destroy
+  #   lost_name = @user.name
+  #   @user.destroy
+  #   redirect_to new_user_path, notice: "#{lost_name}さんのアカウントを削除しました"
+  # end
 
   private
   def users_params

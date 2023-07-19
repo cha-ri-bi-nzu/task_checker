@@ -12,6 +12,7 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.find(params_user)
     if @user.save
+      session[:user_id] = @user.id
       redirect_to user_path(@user.id)
     else
       render :new
