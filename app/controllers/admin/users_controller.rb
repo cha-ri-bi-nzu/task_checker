@@ -1,5 +1,8 @@
 class Admin::UsersController < ApplicationController
+  before_action :set_user, only: %i[show edit update destroy]
+
   def index
+    @users = User.select(:id, :name).includes(:tasks)
   end
 
   def new
@@ -22,6 +25,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def update
+    
   end
 
   def destroy
@@ -30,5 +34,9 @@ class Admin::UsersController < ApplicationController
   private
   def users_params
     params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :task_attributes: %i[id name time_limit status priority created_at destroy])
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end
