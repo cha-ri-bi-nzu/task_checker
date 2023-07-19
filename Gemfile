@@ -39,3 +39,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rexml'
 gem 'kaminari', '~> 0.17.0'
+gem 'bcrypt'
