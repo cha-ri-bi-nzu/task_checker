@@ -28,10 +28,10 @@
   <br>
   <br>
   <% if @user.id.present? %>
-    <%= f.submit :"更新" %>
+    <%= f.submit "更新" %>
     <br>
     <%= link_to "プロフィールに戻る", user_path %>
   <% else %>
-    <%= f.submit :"登録" %>
+    <%= f.submit "登録" %>
   <% end %>
 <% end %>
