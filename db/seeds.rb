@@ -9,6 +9,6 @@
 User.create!(id: 1,
             name: 'adminmin',
             email: 'adminno@email.com',
-            password_digest: 'aaaaaa',
+            password: 'aaaaaa',
             admin: true
             )
