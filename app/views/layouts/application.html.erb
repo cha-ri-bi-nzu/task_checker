@@ -17,9 +17,11 @@
     <div>
       <table class="info_btn">
         <% if logged_in? %>
-          <th><%= link_to "管理者画面", admin_users_path unless current_user.admin? %>|</th>
+          <% if current_user.admin? %>
+            <th><%= link_to "管理者画面", admin_users_path %>|</th>
+          <% end %>
           <th><%= link_to "マイページ", user_path(current_user.id) %>|</th>
-          <th><%= link_to "ログイン", session_path(current_user.id), method: :delete %></th>
+          <th><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></th>
         <% else %>
           <th><%= link_to "新規登録", new_user_path %>|</th>
           <th><%= link_to "ログイン", new_session_path %></th>
