@@ -13,17 +13,18 @@
   <body>
     <header>
       <h1>Task Checker</h1>
-      <%= if logged_in? %>
-        <%= if logged_in? %>
-        <%= link_to "管理者画面", admin_users_path unless current_user.admin? %>
-        <%= link_to "マイページ", user_path(current_user.id) %>
-        <%= link_to "ログイン", session_path(current_user.id), method: :delete %>
-      <%= else %>
-        <%= link_to "新規登録", new_user_path %>
-        <%= link_to "ログイン", new_session_path %>
-      <% end %>
     </header>
     <div>
+      <table class="info_btn">
+        <% if logged_in? %>
+          <th><%= link_to "管理者画面", admin_users_path unless current_user.admin? %>|</th>
+          <th><%= link_to "マイページ", user_path(current_user.id) %>|</th>
+          <th><%= link_to "ログイン", session_path(current_user.id), method: :delete %></th>
+        <% else %>
+          <th><%= link_to "新規登録", new_user_path %>|</th>
+          <th><%= link_to "ログイン", new_session_path %></th>
+        <% end %>
+      <table>
       <br>
       <%= t('view.confirmation_sample') %>
       <br>

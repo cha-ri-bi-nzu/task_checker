@@ -52,6 +52,14 @@ table, div div, h1, h3 {
   margin-left: 25px;
 }
 
+.info_btn a {
+  margin: 0px 15px;
+}
+
+div .info_btn {
+  text-align: right;
+}
+
 div div a {
   margin: auto 10px;
 }
