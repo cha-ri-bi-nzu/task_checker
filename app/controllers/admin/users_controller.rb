@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :are_you_admin?
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[edit update destroy]
   before_action :this_user, only: %i[update destroy]
 
   def index
@@ -19,9 +19,6 @@ class Admin::UsersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def show
   end
 
   def edit
