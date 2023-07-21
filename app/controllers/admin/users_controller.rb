@@ -21,17 +21,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def edit
-  end
-
-  def update
-    if @user.update(users_params)
-      redirect_to user_path, notice: "#{this_user}さんのプロフィールを編集しました"
-    else
-      render :edit
-    end
-  end
-
   def destroy
     @user.destroy
     redirect_to admin_users_path, notice: "#{this_user}さんのアカウントを削除しました"
