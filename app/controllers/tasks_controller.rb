@@ -4,14 +4,11 @@ class TasksController < ApplicationController
 
   def index
     @tasks = current_user_tasks.create_new_sort
-    if params[:create_new_sort]
-      @tasks = @tasks.create_new_sort
-    elsif params[:time_limit_sort]
+    if params[:time_limit_sort]
       @tasks = @tasks.time_limit_sort
     elsif params[:high_priority_sort]
       @tasks = @tasks.high_priority_sort
     end
-    # binding.pry
     if params[:task].present?
       if params[:task][:name].present? && params[:task][:status].present?
         @tasks = @tasks.status_select(params[:task][:status])
@@ -23,7 +20,6 @@ class TasksController < ApplicationController
       end
     end
     @tasks = @tasks.page(params[:page]).per(10)
-    @tasks10 = current_user_tasks.page(params[:page]).per(10)
   end
 
   def new
