@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
 
   private
   def users_params
-    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, task_attributes: %i[id name time_limit status priority created_at destroy])
+    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :admin)
   end
 
   def set_user
