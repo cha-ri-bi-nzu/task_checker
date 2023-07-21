@@ -17,6 +17,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    @tasks = current_user_tasks.create_new_sort
+    @tasks = @tasks.page(params[:page]).per(10)
+    @tasks10 = current_user_tasks.page(params[:page]).per(10) 
   end
 
   def edit
@@ -38,7 +41,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, task_attributes: %i[id name time_limit status priority created_at destroy])
+    params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :admin, task_attributes: %i[id name time_limit status priority created_at _destroy])
   end
 
   def set_user
@@ -47,5 +50,9 @@ class UsersController < ApplicationController
 
   def are_you_current_user?
     redirect_to tasks_path(@user.id) unless @user.id == current_user.id
+  end
+
+  def current_user_tasks
+    current_user.tasks.select(:id, :name, :time_limit, :status, :priority, :created_at)
   end
 end
