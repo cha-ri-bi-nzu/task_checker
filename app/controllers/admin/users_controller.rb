@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
   before_action :this_user, only: %i[update destroy]
 
   def index
-    @users = User.select(:id, :name).includes(:tasks)
+    @users = User.select(:id, :name).includes(:tasks).page(params[:page]).per(10)
   end
 
   def new
@@ -34,7 +34,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_path, notice: "#{this_user}さんのアカウントを削除しました"
+    redirect_to admin_users_path, notice: "#{this_user}さんのアカウントを削除しました"
   end
 
   private
