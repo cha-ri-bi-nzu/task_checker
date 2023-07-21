@@ -1,9 +1,8 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  # before_action :set_url, only: %i[new create edit update]
 
   def index
-    @tasks = current_user_tasks.create_new_sort
+    @tasks = current_user.tasks.includes(:user).create_new_sort
     if params[:time_limit_sort]
       @tasks = @tasks.time_limit_sort
     elsif params[:high_priority_sort]
@@ -62,12 +61,4 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
-
-  def current_user_tasks
-    current_user.tasks.select(:id, :name, :time_limit, :status, :priority, :created_at)
-  end
-
-  # def set_url
-  #   @url = request.referer
-  # end
 end

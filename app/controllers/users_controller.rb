@@ -17,9 +17,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @tasks = current_user_tasks.create_new_sort
-    @tasks = @tasks.page(params[:page]).per(10)
-    @tasks10 = current_user_tasks.page(params[:page]).per(10) 
+    @tasks = current_user.tasks.includes(:user).page(params[:page]).per(10)
   end
 
   def edit
@@ -50,9 +48,5 @@ class UsersController < ApplicationController
 
   def are_you_current_user?
     redirect_to tasks_path(@user.id) unless @user.id == current_user.id
-  end
-
-  def current_user_tasks
-    current_user.tasks.select(:id, :name, :time_limit, :status, :priority, :created_at)
   end
 end
