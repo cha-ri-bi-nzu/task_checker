@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: %i[new create]
   before_action :set_user, only: %i[show edit update destroy]
   before_action :current_user_or_admin, only: %i[show edit update]
+  before_action :logged_out_or_admin, only: %i[new create]
 
   def new
     @user = User.new
@@ -56,6 +57,10 @@ class UsersController < ApplicationController
   end
 
   def current_user_or_admin
-    redirect_to tasks_path(current_user.id) unless @user == current_user || current_user.admin == "管理者"
+    redirect_to tasks_path(current_user.id), notice: "他のユーザーのページは閲覧できません" unless @user == current_user || current_user.admin == "管理者"
+  end
+
+  def logged_out_or_admin
+    redirect_to tasks_path(current_user.id), notice: "新規アカウント登録される場合は、ログアウトして下さい" unless logged_in? == false || current_user.admin == "管理者"
   end
 end
