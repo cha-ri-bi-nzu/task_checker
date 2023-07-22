@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if logged_in? && current_user.admin?
+      if logged_in? && current_user.admin = "管理者"
         redirect_to admin_users_path, notice: "#{@user.name}さんのアカウントを作成しました"
       else
         session[:user_id] = @user.id
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   def update
     binding.pry
     if @user.update(user_params)
-      if current_user.admin?
+      if current_user.admin = "管理者"
         redirect_to admin_users_path, notice: "#{@user.name}さんのプロフィールを編集しました"
       else
         redirect_to user_path, notice: "プロフィール編集完了"
@@ -56,6 +56,6 @@ class UsersController < ApplicationController
   end
 
   def current_user_or_admin
-    redirect_to tasks_path(@user.id) unless @user == current_user || current_user.admin?
+    redirect_to tasks_path(@user.id) unless @user == current_user || current_user.admin = "管理者"
   end
 end

@@ -17,7 +17,7 @@
     <div>
       <table class="info_btn">
         <% if logged_in? %>
-          <% if current_user.admin? %>
+          <% if current_user.admin = "管理者" %>
             <th><%= link_to "管理者画面", admin_users_path %>|</th>
           <% end %>
           <th><%= link_to "マイページ", user_path(current_user.id) %>|</th>

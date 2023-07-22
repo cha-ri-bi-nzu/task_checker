@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :are_you_admin?
+  before_action :user_or_admin
 
   def index
     @users = User.select(:id, :name, :admin).includes(:tasks).page(params[:page]).per(10)
@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-  def are_you_admin?
-    redirect_to tasks_path(@user.id) unless current_user.admin?
+  def user_or_admin
+    redirect_to tasks_path(@user.id) unless current_user.admin = "管理者"
   end
 end
