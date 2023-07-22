@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      if current_user.admin?
+      if logged_in? && current_user.admin?
         redirect_to admin_users_path, notice: "#{@user.name}さんのアカウントを作成しました"
       else
         session[:user_id] = @user.id
