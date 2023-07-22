@@ -14,6 +14,9 @@ class Admin::UsersController < ApplicationController
 
   private
   def user_or_admin
-    redirect_to tasks_path(current_user.id) unless current_user.admin == "管理者"
+    unless current_user.admin == "管理者"
+      redirect_to tasks_path(current_user.id)
+      flash[:danger] = "管理者権限がない為、アクセス出来ません！"
+    end
   end
 end
