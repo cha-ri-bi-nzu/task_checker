@@ -6,21 +6,7 @@ class Admin::UsersController < ApplicationController
   def index
     @users = User.select(:id, :name).includes(:tasks).page(params[:page]).per(10)
   end
-
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.find(params_user)
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to user_path(@user.id)
-    else
-      render :new
-    end
-  end
-
+  
   def destroy
     @user.destroy
     redirect_to admin_users_path, notice: "#{this_user}さんのアカウントを削除しました"
@@ -29,14 +15,6 @@ class Admin::UsersController < ApplicationController
   private
   def users_params
     params.require(:user).permit(:id, :name, :email, :password, :password_confirmation, :admin)
-  end
-
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  def this_user
-    this_user = @user.name
   end
 
   def are_you_admin?
