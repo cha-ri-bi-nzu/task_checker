@@ -24,7 +24,7 @@
     <br>
     <%= f.label :"パスワード(確認用)：" %>
     <%= f.password_field :password_confirmation %>
-    <% if logged_in? && current_user.admin = "管理者" %>
+    <% if logged_in? && current_user.admin == "管理者" %>
       <br>
       <br>
       <%= f.label :"管理者権限：" %>
