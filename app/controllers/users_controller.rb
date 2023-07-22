@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @tasks = current_user.tasks.includes(:user).page(params[:page]).per(10)
+    @tasks = @user.tasks.includes(:user).page(params[:page]).per(10)
   end
 
   def edit
