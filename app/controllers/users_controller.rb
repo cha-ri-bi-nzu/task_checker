@@ -28,6 +28,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    binding.pry
     if @user.update(user_params)
       if current_user.admin?
         redirect_to admin_users_path, notice: "#{@user.name}さんのプロフィールを編集しました"

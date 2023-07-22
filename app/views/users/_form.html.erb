@@ -24,6 +24,12 @@
     <br>
     <%= f.label :"パスワード(確認用)：" %>
     <%= f.password_field :password_confirmation %>
+    <% if logged_in? && current_user.admin? %>
+      <br>
+      <br>
+      <%= f.label :"管理者権限：" %>
+      <%= f.select :admin, select_from_enum(User, :admin) %>
+    <% end %>
   </div>
   <br>
   <br>

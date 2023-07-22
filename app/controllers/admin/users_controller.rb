@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   before_action :are_you_admin?
 
   def index
-    @users = User.select(:id, :name).includes(:tasks).page(params[:page]).per(10)
+    @users = User.select(:id, :name, :admin).includes(:tasks).page(params[:page]).per(10)
   end
   
   def destroy
