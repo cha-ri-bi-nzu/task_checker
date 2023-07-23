@@ -20,8 +20,6 @@ RSpec.describe 'ユーザー管理機能', type: :system do
     end
   end
   describe 'ログイン要請機能' do
-    before do
-    end
     context 'ログインせずにタスク一覧画面にアクセスした場合' do
       it 'ログイン画面に遷移される' do
         visit user_path(1)
@@ -44,12 +42,18 @@ RSpec.describe 'セッション機能', type: :system do
         fill_in "session[password]", with: 'aaaaaa'
         click_button "Log in"
         expect(current_path).to eq user_path(3)
-        expect(page).to have_content 'user1_nameさんのマイページ'
+        expect(page).to have_content 'user_name1さんのマイページ'
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
         expect(page).to have_content 'タスク一覧'
         expect(page).to have_content 'プロフィール編集'
       end
+    end
+    before do
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
     end
     context 'ログアウトをした場合' do
       it "ログアウト状態でログイン画面に遷移される" do
@@ -63,6 +67,14 @@ RSpec.describe 'セッション機能', type: :system do
     end
   end
   describe 'ユーザー確認機能' do
+    let!(:user) {FactoryBot.create(:user, id: 1, name: "user1_name", email: "aiueo@email.com", password: "aiueoka")}
+    let!(:second_user) {FactoryBot.create(:user, id: 3, name: "user_name1", email: "1ban@mail.com", password: "aaaaaa")}
+    before do
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
+    end
     context '一般ユーザーが他のユーザーのマイページにアクセスした場合' do
       it "自分のタスク一覧画面に遷移される" do
         visit user_path(1)
