@@ -29,8 +29,9 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '一覧表示機能' do
     let!(:user) {FactoryBot.create(:user)}
     # 必要に応じて、テストデータの内容を変更して構わない
-    let!(:task) {FactoryBot.create(:task, name: "task", user: user)}
-    let!(:task) {FactoryBot.create(:second_task, name: "sample", user: user)}
+    let!(:task) {FactoryBot.create(:task, name: "task", content: 'content4', created_at: Time.current + 1.day, user: user)}
+    let!(:task) {FactoryBot.create(:second_task, name: "sample", content: 'content8', created_at: Time.current + 2.day, user: user)}
+    let!(:task) {FactoryBot.create(:third_task, name: "name5", content: 'content4', created_at: Time.current + 3.day, user: user)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -39,16 +40,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        FactoryBot.create(:task, name: 'name', content: 'content', user: user)
         visit tasks_path
-        expect(page).to have_content 'name'
+        expect(page).to have_content 'name5'
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        FactoryBot.create(:task, id: 1, name: 'name1', content: 'content4', created_at: Time.current + 1.day, user: user)
-        FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day, user: user)
-        FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day, user: user)
         visit tasks_path
         task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "name5"
@@ -77,14 +74,11 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '終了期限でソートをした場合' do
       it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
-        sleep(1)
-        click_link "終了期限遠い順"
-        sleep(1)
+        click_on "終了期限遠い順"
         visit tasks_path
-        sleep(1)
         # binding.pry
-        task_list_f = first('.spec_testname')
-        expect(task_list_f).to have_content "t_s_n"
+        task_list_f = page.all('.spec_testname')
+        expect(task_list_f[0]).to have_content "t_s_n"
       end
     end
     context '終了期限でソートをした場合' do
