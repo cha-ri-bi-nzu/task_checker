@@ -76,7 +76,7 @@ RSpec.describe 'タスク管理機能', type: :system do
         visit tasks_path
         click_on '終了期限遠い順'
         task_list = all(".spec_test_name")
-        binding.pry
+        # binding.pry
         expect(task_list[0]).to have_content "t_s_n"
       end
     end

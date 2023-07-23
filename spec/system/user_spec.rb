@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'ユーザー管理機能', type: :system do
   describe '新規作成機能' do
     context 'ユーザーを新規作成した場合' do
-      it '作成したタスクが表示される' do
+      it 'ユーザーのマイページに遷移される' do
         visit new_user_path
         # sleep(1)
         fill_in "user_name", with: 'user1_name'
@@ -12,7 +12,10 @@ RSpec.describe 'ユーザー管理機能', type: :system do
         fill_in "user_password_confirmation", with: 'aiueoka'
         click_button "登録"
         # binding.pry
+        expect(current_path).to eq user_path(1)
         expect(page).to have_content 'user1_name'
+        expect(page).to have_content 'マイページ'
+        expect(page).to have_content 'ログアウト'
       end
     end
   end
@@ -21,15 +24,14 @@ RSpec.describe 'ユーザー管理機能', type: :system do
     end
     context 'ログインせずにタスク一覧画面にアクセスした場合' do
       it 'ログイン画面に遷移される' do
-      end
-    end
-    context 'タスクが作成日時の降順に並んでいる場合' do
-      it '新しいタスクが一番上に表示される' do
+        visit user_path(1)
+        expect(current_path).to eq new_session_path
+        expect(page).to have_content '新規登録'
+        expect(page).to have_content 'ログイン'
+        expect(page).to have_content 'ログインをして下さい'
       end
     end
   end
-
-  pending "add some scenarios (or delete) #{__FILE__}"
 end
 
 RSpec.describe 'セッション機能', type: :system do
@@ -51,8 +53,6 @@ RSpec.describe 'セッション機能', type: :system do
       end
     end
   end
-
-  pending "add some scenarios (or delete) #{__FILE__}"
 end
 
 RSpec.describe '管理画面機能', type: :system do
@@ -86,6 +86,4 @@ RSpec.describe '管理画面機能', type: :system do
       end
     end
   end
-
-  pending "add some scenarios (or delete) #{__FILE__}"
 end
