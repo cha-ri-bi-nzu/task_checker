@@ -63,4 +63,20 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  DatabaseCleaner.stategy = :truncation
+
+  # RSpecの実行前に1度、実行
+  config.before(:suite) do
+    DatabaseCleaner.clean
+  end
+
+  # rspecでいうexample、turnipでいうシナリオが終わるごとに実行
+  config.before(:each) do
+    DatabaseCleaner.clean
+  end  
+
+  # 最後に1度、実行
+  config.after(:suite) do
+    DatabaseCleaner.clean
+  end
 end
