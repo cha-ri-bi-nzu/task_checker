@@ -36,20 +36,41 @@ end
 
 RSpec.describe 'セッション機能', type: :system do
   describe 'ログイン機能' do
-    before do
-    end
+    let!(:user) {FactoryBot.create(:user, id: 3, name: "user_name1", email: "1ban@mail.com", password: "aaaaaa")}
     context 'ログインをした場合' do
       it "ログイン状態で自分のマイページに遷移される" do
+        visit new_session_path
+        fill_in "session_email", with: '1ban@mail.com'
+        fill_in "session[password]", with: 'aaaaaa'
+        click_button "Log in"
+        expect(current_path).to eq user_path(3)
+        expect(page).to have_content 'user1_nameさんのマイページ'
+        expect(page).to have_content 'マイページ'
+        expect(page).to have_content 'ログアウト'
+        expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content 'プロフィール編集'
       end
     end
     context 'ログアウトをした場合' do
       it "ログアウト状態でログイン画面に遷移される" do
+        visit user_path(3)
+        click_link "ログアウト"
+        expect(current_path).to eq new_session_path
+        expect(page).to have_content '新規登録'
+        expect(page).to have_content 'ログイン'
+        expect(page).to have_content 'ログアウトしました'
       end
     end
   end
   describe 'ユーザー確認機能' do
     context '一般ユーザーが他のユーザーのマイページにアクセスした場合' do
       it "自分のタスク一覧画面に遷移される" do
+        visit user_path(1)
+        expect(current_path).to eq user_path(3)
+        expect(page).to have_content 'user1_nameさんのマイページ'
+        expect(page).to have_content 'マイページ'
+        expect(page).to have_content 'ログアウト'
+        expect(page).to have_content '他のユーザーのページは閲覧できません'
       end
     end
   end
