@@ -14,7 +14,7 @@
     <br>
     <% @tasks.each do |task| %>
       <tr>
-        <td class="spec_testname"><%= task.name %></td>
+        <td class="spec_test_name"><%= task.name %></td>
         <td class="task_time_limit"><%= l task.time_limit, format: :short %></td>
         <td class="task_status"><%= task.status %></td>
         <td class="task_priority"><%= task.priority %></td>

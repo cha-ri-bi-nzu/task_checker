@@ -47,8 +47,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
         visit tasks_path
-        binding.pry
-        task_list_f = first('.spec_testname')
+        task_list_f = first('.spec_test_name')
         expect(task_list_f).to have_content "name5"
       end
     end
@@ -68,17 +67,18 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "新しいタスクが一番上に表示される" do
         visit tasks_path
         click_link "作成日新しい順"
-        task_list_f = first('.spec_testname')
+        task_list_f = first('.spec_test_name')
         expect(task_list_f).to have_content "sample_2"
       end
     end
     context '終了期限でソートをした場合' do
       it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
-        click_on "終了期限遠い順"
+        click_on '終了期限遠い順'
         visit tasks_path
         # binding.pry
-        task_list_f = page.all('.spec_testname')
+        task_list_f = all('.spec_test_name')
+        binding.pry
         expect(task_list_f[0]).to have_content "t_s_n"
       end
     end
@@ -86,7 +86,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "終了期限の最も近いタスクが一番上に表示される" do
         visit tasks_path
         click_link "優先度高い順"
-        task_list_f = first('.spec_testname')
+        task_list_f = first('.spec_test_name')
         expect(task_list_f).to have_content "task_name1"
       end
     end
