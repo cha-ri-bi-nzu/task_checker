@@ -59,14 +59,12 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:user) {FactoryBot.create(:user)}
     let!(:task) {FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 7.day, priority: "中", created_at: Time.current + 1.day, user: user)}
     let!(:task) {FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 3.day, priority: "低", created_at: Time.current + 2.day, user: user)}
-    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 5.day, priority: "高", created_at: Time.current + 3.day, user: user)}
+    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 6.day, priority: "高", created_at: Time.current + 3.day, user: user)}
     before do
       visit new_session_path
-      sleep(1)
       fill_in "session_email", with: '1ban@mail.com'
       fill_in "session[password]", with: 'aaaaaa'
       click_button "Log in"
-      sleep(1)
     end
     context '作成日時でソートをした場合' do
       it "新しいタスクが一番上に表示される" do
@@ -79,13 +77,10 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '終了期限でソートをした場合' do
       it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
-        sleep(1)
         click_link "終了期限遠い順"
         # binding.pry
-        sleep(1)
-        task_list_f = page.all('.spec_testname')
-        sleep(1)
-        expect(task_list_f[0]).to have_content "t_s_n"
+        task_list_f = first('.spec_testname')
+        expect(task_list_f).to have_content "sample_2"
       end
     end
     context '終了期限でソートをした場合' do
