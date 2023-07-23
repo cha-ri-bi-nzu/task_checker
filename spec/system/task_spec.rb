@@ -2,6 +2,13 @@ require 'rails_helper'
 
 RSpec.describe 'タスク管理機能', type: :system do
   describe '新規作成機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    before do
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
+    end
     context 'タスクを新規作成した場合' do
       it '作成したタスクが表示される' do
         visit new_task_path
@@ -15,27 +22,33 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '未着手'
         expect(page).to have_content '07/18 10:30'
         expect(page).to have_content '高'
+        expect(page).to have_content 'user_name1'
       end
     end
   end
   describe '一覧表示機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    # 必要に応じて、テストデータの内容を変更して構わない
+    let!(:task) {FactoryBot.create(:task, name: "task", user: user)}
+    let!(:task) {FactoryBot.create(:second_task, name: "sample", user: user)}
     before do
-      # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task, name: "task")
-      FactoryBot.create(:second_task, name: "sample")
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
     end
     context '一覧画面に遷移した場合' do
       it '作成済みのタスク一覧が表示される' do
-        FactoryBot.create(:task, name: 'name', content: 'content')
+        FactoryBot.create(:task, name: 'name', content: 'content', user: user)
         visit tasks_path
         expect(page).to have_content 'name'
       end
     end
     context 'タスクが作成日時の降順に並んでいる場合' do
       it '新しいタスクが一番上に表示される' do
-        FactoryBot.create(:task, id: 1, name: 'name1', content: 'content4', created_at: Time.current + 1.day)
-        FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day)
-        FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day)
+        FactoryBot.create(:task, id: 1, name: 'name1', content: 'content4', created_at: Time.current + 1.day, user: user)
+        FactoryBot.create(:task, id: 2, name: 'name2', content: 'content8', created_at: Time.current + 2.day, user: user)
+        FactoryBot.create(:task, id: 3, name: 'name5', content: 'content4', created_at: Time.current + 3.day, user: user)
         visit tasks_path
         task_list_f = first('.spec_testname')
         expect(task_list_f).to have_content "name5"
@@ -43,11 +56,17 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe 'ソート機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    let!(:task) {FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 7.day, priority: "中", created_at: Time.current + 1.day, user: user)}
+    let!(:task) {FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 3.day, priority: "低", created_at: Time.current + 2.day, user: user)}
+    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 5.day, priority: "高", created_at: Time.current + 3.day, user: user)}
     before do
-      # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 7.day, priority: "中", created_at: Time.current + 1.day)
-      FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 3.day, priority: "低", created_at: Time.current + 2.day)
-      FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 5.day, priority: "高", created_at: Time.current + 3.day)
+      visit new_session_path
+      sleep(1)
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
+      sleep(1)
     end
     context '作成日時でソートをした場合' do
       it "新しいタスクが一番上に表示される" do
@@ -60,9 +79,13 @@ RSpec.describe 'タスク管理機能', type: :system do
     context '終了期限でソートをした場合' do
       it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
+        sleep(1)
         click_link "終了期限遠い順"
-        task_list_f = first('.spec_testname')
-        expect(task_list_f).to have_content "t_s_n"
+        # binding.pry
+        sleep(1)
+        task_list_f = page.all('.spec_testname')
+        sleep(1)
+        expect(task_list_f[0]).to have_content "t_s_n"
       end
     end
     context '終了期限でソートをした場合' do
@@ -75,9 +98,16 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe '詳細表示機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    before do
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
+    end
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        FactoryBot.create(:task, name: 'name', content: 'content')
+        FactoryBot.create(:task, name: 'name', content: 'content', user: user)
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content 'name'
@@ -85,11 +115,15 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe '検索機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    let!(:task) {FactoryBot.create(:task, name: "task_name1", status: "未着手", user: user)}
+    let!(:task) {FactoryBot.create(:second_task, name: "sample_1", status: "着手中", user: user)}
+    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", status: "完了", user: user)}
     before do
-      # 必要に応じて、テストデータの内容を変更して構わない
-      FactoryBot.create(:task, name: "task_name1", status: "未着手")
-      FactoryBot.create(:second_task, name: "sample_1", status: "着手中")
-      FactoryBot.create(:third_task, name: "sample_2", status: "完了")
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
     end
     context 'タイトルであいまい検索をした場合' do
       it "検索キーワードを含むタスクで絞り込まれる" do
@@ -123,9 +157,16 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
   end
   describe '詳細表示機能' do
+    let!(:user) {FactoryBot.create(:user)}
+    before do
+      visit new_session_path
+      fill_in "session_email", with: '1ban@mail.com'
+      fill_in "session[password]", with: 'aaaaaa'
+      click_button "Log in"
+    end
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        FactoryBot.create(:task, name: 'name', content: 'content')
+        FactoryBot.create(:task, name: 'name', content: 'content', user: user)
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content 'name'
