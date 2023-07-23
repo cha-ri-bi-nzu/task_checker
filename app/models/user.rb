@@ -8,4 +8,6 @@ class User < ApplicationRecord
   validates :password, length: {minimum: 6}
 
   enum admin: {管理者: true, 一般: false}
+
+  # before_update UpdateAdminAtCallback.new
 end
