@@ -12,9 +12,15 @@
 #             password: 'aaaaaa',
 #             admin: true
 #             )
-User.create!(id: 40,
-            name: 'adminmin40',
-            email: '40@email.com',
+# User.create!(id: 40,
+#             name: 'adminmin40',
+#             email: '40@email.com',
+#             password: 'aaaaaa',
+#             admin: true
+#             )
+User.create!(id: 80,
+            name: 'adminmin80',
+            email: '80@email.com',
             password: 'aaaaaa',
             admin: true
             )
