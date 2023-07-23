@@ -67,8 +67,8 @@ RSpec.describe 'セッション機能', type: :system do
     end
   end
   describe 'ユーザー確認機能' do
-    let!(:user) {FactoryBot.create(:user, id: 1, name: "user1_name", email: "aiueo@email.com", password: "aiueoka")}
-    let!(:second_user) {FactoryBot.create(:user, id: 3, name: "user_name1", email: "1ban@mail.com", password: "aaaaaa")}
+    let!(:user) {FactoryBot.create(:user, id: 1, name: "user1_name", email: "aiueo@email.com", password: "aiueoka", admin: "一般")}
+    let!(:second_user) {FactoryBot.create(:user, id: 3, name: "user_name1", email: "1ban@mail.com", password: "aaaaaa", admin: "一般")}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -78,10 +78,11 @@ RSpec.describe 'セッション機能', type: :system do
     context '一般ユーザーが他のユーザーのマイページにアクセスした場合' do
       it "自分のタスク一覧画面に遷移される" do
         visit user_path(1)
-        expect(current_path).to eq user_path(3)
-        expect(page).to have_content 'user1_nameさんのマイページ'
+        expect(current_path).to eq tasks_path(3)
         expect(page).to have_content 'マイページ'
         expect(page).to have_content 'ログアウト'
+        expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content '新タスク登録'
         expect(page).to have_content '他のユーザーのページは閲覧できません'
       end
     end
