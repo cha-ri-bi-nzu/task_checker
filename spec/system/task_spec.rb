@@ -59,7 +59,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:user) {FactoryBot.create(:user)}
     let!(:task) {FactoryBot.create(:task, name: "task_name1", time_limit: Time.current - 7.day, priority: "中", created_at: Time.current + 1.day, user: user)}
     let!(:task) {FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current - 3.day, priority: "低", created_at: Time.current + 2.day, user: user)}
-    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 8.day, priority: "高", created_at: Time.current + 3.day, user: user)}
+    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current - 2.day, priority: "高", created_at: Time.current + 3.day, user: user)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
