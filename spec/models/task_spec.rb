@@ -26,8 +26,8 @@ RSpec.describe Task, type: :model do
     # 必要に応じて、テストデータの内容を変更して構わない
     let!(:user) { FactoryBot.create(:user, name: 'user_name1') }
     let!(:task) { FactoryBot.create(:task, name: 'task', status: "未着手", user: user) }
-    let!(:second_task) { FactoryBot.create(:second_task, name: "sample", status: "未着手", user: user) }
-    let!(:third_task) { FactoryBot.create(:third_task, name: "task01", status: "着手中", user: user) }
+    let!(:second_task) { FactoryBot.create(:task, name: "sample", status: "未着手", user: user) }
+    let!(:third_task) { FactoryBot.create(:task, name: "task01", status: "着手中", user: user) }
     context 'scopeメソッドでタイトルのあいまい検索をした場合' do
       it "検索キーワードを含むタスクが絞り込まれる" do
         # title_seachはscopeで提示したタイトル検索用メソッドである。メソッド名は任意で構わない。

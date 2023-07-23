@@ -30,8 +30,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:user) {FactoryBot.create(:user)}
     # 必要に応じて、テストデータの内容を変更して構わない
     let!(:task) {FactoryBot.create(:task, name: "task", content: 'content4', created_at: Time.current + 1.day, user: user)}
-    let!(:task) {FactoryBot.create(:second_task, name: "sample", content: 'content8', created_at: Time.current + 2.day, user: user)}
-    let!(:task) {FactoryBot.create(:third_task, name: "name5", content: 'content4', created_at: Time.current + 3.day, user: user)}
+    let!(:second_task) {FactoryBot.create(:task, name: "sample", content: 'content8', created_at: Time.current + 2.day, user: user)}
+    let!(:third_task) {FactoryBot.create(:task, name: "name5", content: 'content4', created_at: Time.current + 3.day, user: user)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -55,8 +55,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe 'ソート機能' do
     let!(:user) {FactoryBot.create(:user)}
     let!(:task) {FactoryBot.create(:task, name: "task_name1", time_limit: Time.current + 3.day, priority: "高", created_at: Time.current - 3.day, user: user)}
-    let!(:task) {FactoryBot.create(:second_task, name: "t_s_n", time_limit: Time.current + 7.day, priority: "低", created_at: Time.current - 2.day, user: user)}
-    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", time_limit: Time.current + 5.day, priority: "中", created_at: Time.current - 1.day, user: user)}
+    let!(:second_task) {FactoryBot.create(:task, name: "t_s_n", time_limit: Time.current + 7.day, priority: "低", created_at: Time.current - 2.day, user: user)}
+    let!(:third_task) {FactoryBot.create(:task, name: "sample_2", time_limit: Time.current + 5.day, priority: "中", created_at: Time.current - 1.day, user: user)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -75,11 +75,9 @@ RSpec.describe 'タスク管理機能', type: :system do
       it "終了期限の最も遠いタスクが一番上に表示される" do
         visit tasks_path
         click_on '終了期限遠い順'
-        visit tasks_path
-        # binding.pry
-        task_list_f = all('.spec_test_name')
+        task_list = all(".spec_test_name")
         binding.pry
-        expect(task_list_f[0]).to have_content "t_s_n"
+        expect(task_list[0]).to have_content "t_s_n"
       end
     end
     context '終了期限でソートをした場合' do
@@ -111,8 +109,8 @@ RSpec.describe 'タスク管理機能', type: :system do
   describe '検索機能' do
     let!(:user) {FactoryBot.create(:user)}
     let!(:task) {FactoryBot.create(:task, name: "task_name1", status: "未着手", user: user)}
-    let!(:task) {FactoryBot.create(:second_task, name: "sample_1", status: "着手中", user: user)}
-    let!(:task) {FactoryBot.create(:third_task, name: "sample_2", status: "完了", user: user)}
+    let!(:second_task) {FactoryBot.create(:task, name: "sample_1", status: "着手中", user: user)}
+    let!(:third_task) {FactoryBot.create(:task, name: "sample_2", status: "完了", user: user)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
