@@ -91,14 +91,40 @@ end
 
 RSpec.describe '管理画面機能', type: :system do
   describe '管理権限確認機能' do
-    before do
-    end
+    let!(:user) {FactoryBot.create(:user, id: 1, name: "user1_name", email: "aiueo@email.com", password: "aiueoka", admin: "管理者")}
+    let!(:second_user) {FactoryBot.create(:user, id: 3, name: "user_name1", email: "1ban@mail.com", password: "aaaaaa", admin: "一般")}
     context '管理ユーザーが管理画面にアクセスした場合' do
+      before do
+        visit new_session_path
+        fill_in "session_email", with: 'aiueo@email.com'
+        fill_in "session_password", with: 'aiueoka'
+        click_button "Log in"
+      end
       it '管理画面に遷移される' do
+        click_link "管理者画面"
+        expect(current_path).to eq admin_users_path
+        expect(page).to have_content '管理者画面'
+        expect(page).to have_content 'マイページ'
+        expect(page).to have_content 'ログアウト'
+        expect(page).to have_content 'ユーザー一覧'
+        expect(page).to have_content '新規ユーザー登録'
       end
     end
     context '一般ユーザーが管理画面にアクセスした場合' do
+      before do
+        visit new_session_path
+        fill_in "session_email", with: '1ban@mail.com'
+        fill_in "session[password]", with: 'aaaaaa'
+        click_button "Log in"
+      end
       it "自分のタスク一覧画面に遷移される" do
+        visit admin_users_path
+        expect(current_path).to eq tasks_path(3)
+        expect(page).to have_content 'マイページ'
+        expect(page).to have_content 'ログアウト'
+        expect(page).to have_content 'タスク一覧'
+        expect(page).to have_content '新タスク登録'
+        expect(page).to have_content '管理者権限がない為、アクセス出来ません！'
       end
     end
   end
