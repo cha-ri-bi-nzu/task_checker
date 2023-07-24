@@ -18,7 +18,7 @@
         <td class="users_tasks"><%= user.tasks.size %></td>
         <td><button type="button" class="btn btn-success"><%= link_to '詳細', user_path(user.id) %></button></td>
         <td><button type="button" class="btn btn-info"><%= link_to '編集', edit_user_path(user.id) %></button></td>
-        <td><button type="button" class="btn btn-danger"><%= link_to '削除', admin_user_path(user.id), method: :delete, data: {confirm: '本当に削除しますか？'} %></button></td>
+        <td><button type="button" class="btn btn-danger"><%= link_to '削除', admin_user_path(user.id), method: :delete, id: "delete_#{user.id}", data: {confirm: '本当に削除しますか？'} %></button></td>
       </tr>
     <% end %>
   </table>
