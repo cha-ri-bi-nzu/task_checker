@@ -14,7 +14,7 @@ class User < ApplicationRecord
 
   private
   def admin_is_not_0
-    if User.where(admin: true).count == 1 # && self.admin == true
+    if User.where(admin: true).count == 1 && self.admin == true
       throw(:abort)
       errors.add :base, "管理者は１人以上いないといけません"
     end
