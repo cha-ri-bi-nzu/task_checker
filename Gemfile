@@ -41,3 +41,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rexml'
 gem 'kaminari', '~> 0.17.0'
 gem 'bcrypt' # , '<= 3.1.18'
+gem 'net-smtp'
+gem 'net-imap'
+gem 'net-pop'
