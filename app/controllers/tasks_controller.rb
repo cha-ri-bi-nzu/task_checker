@@ -1,17 +1,13 @@
 class TasksController < ApplicationController
   before_action :set_task, only: %i[show edit update destroy]
-  # before_action :set_url, only: %i[new create edit update]
 
   def index
-    @tasks = Task.all.order(created_at: :desc)
-    if params[:create_new_sort]
-      @tasks = Task.create_new_sort
-    elsif params[:time_limit_sort]
-      @tasks = Task.time_limit_sort
+    @tasks = current_user.tasks.includes(:user).create_new_sort
+    if params[:time_limit_sort]
+      @tasks = @tasks.time_limit_sort
     elsif params[:high_priority_sort]
-      @tasks = Task.high_priority_sort
+      @tasks = @tasks.high_priority_sort
     end
-    # binding.pry
     if params[:task].present?
       if params[:task][:name].present? && params[:task][:status].present?
         @tasks = @tasks.status_select(params[:task][:status])
@@ -23,7 +19,6 @@ class TasksController < ApplicationController
       end
     end
     @tasks = @tasks.page(params[:page]).per(10)
-    @tasks10 = Task.all.page(params[:page]).per(10)
   end
 
   def new
@@ -31,7 +26,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     if @task.save
       redirect_to tasks_path, notice: "登録完了しました"
     else
@@ -66,8 +61,4 @@ class TasksController < ApplicationController
   def set_task
     @task = Task.find(params[:id])
   end
-
-  # def set_url
-  #   @url = request.referer
-  # end
 end

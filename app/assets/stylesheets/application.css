@@ -15,10 +15,16 @@
  */
 
 
+  html {
+  min-width: 600px;
+  min-height: 600px;
+}
+
   body {
   margin: 0px auto;
   max-width: 900px;
-  height: 100%;
+  min-height: 600px;
+  max-height: 100%;
 }
 
 div{
@@ -44,6 +50,14 @@ header h1, header a {
 
 table, div div, h1, h3 {
   margin-left: 25px;
+}
+
+.info_btn a {
+  margin: 0px 15px;
+}
+
+div .info_btn {
+  text-align: right;
 }
 
 div div a {
