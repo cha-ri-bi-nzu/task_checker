@@ -9,17 +9,17 @@ class User < ApplicationRecord
 
   enum admin: {管理者: true, 一般: false}
 
-  before_update :admin_is_not_0
-  before_destroy :admin_is_not_0
+  before_update :admin_is_not_change
+  before_destroy :admin_is_not_delete
 
   private
-  def admin_is_not_0
-    if User.where(admin: true).count == 1 && self.admin == true
-      throw(:abort)
-      errors.add :base, "管理者は１人以上いないといけません"
-    end
+  def admin_is_not_change
+    throw(:abort) if User.where(admin: true).count == 1 && self.admin == "一般"
   end
 
+  def admin_is_not_delete
+    throw(:abort) if User.where(admin: true).count == 1 && self.admin == "管理者"
+  end
   # admin_count = User.group(:admin).count
   #   if admin_count["管理者"] == 1
   #     User(current_user.id).admin = :管理者
