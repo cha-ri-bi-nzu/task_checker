@@ -4,7 +4,7 @@ class Task < ApplicationRecord
 
   scope :create_new_sort, -> {order(created_at: :desc)}
   scope :time_limit_sort, -> {reorder(time_limit: :desc)}
-  scope :name_select, -> (name){where("name LIKE ?", "%#{name}%")}
+  scope :name_select, -> (name){where("tasks.name LIKE ?", "%#{name}%")} # nameが混じるけ、tasksテーブルのっち指定する
   scope :status_select, -> (status){where(status: status)} # {where(status: params[:status])}
   scope :high_priority_sort, -> {reorder(priority: :asc)}
   
