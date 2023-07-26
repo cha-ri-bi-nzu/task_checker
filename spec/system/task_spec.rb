@@ -91,6 +91,7 @@ RSpec.describe 'タスク管理機能', type: :system do
   end
   describe '詳細表示機能' do
     let!(:user) {FactoryBot.create(:user)}
+    let!(:label) {FactoryBot.create(:label)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -99,7 +100,7 @@ RSpec.describe 'タスク管理機能', type: :system do
     end
     context '任意のタスク詳細画面に遷移した場合' do
       it '該当タスクの内容が表示される' do
-        FactoryBot.create(:task, name: 'name', content: 'content', user: user)
+        FactoryBot.create(:task, name: 'name', content: 'content', user: user, labels: [label])
         visit tasks_path
         click_link "詳細"
         expect(page).to have_content 'name'
@@ -110,7 +111,8 @@ RSpec.describe 'タスク管理機能', type: :system do
     let!(:user) {FactoryBot.create(:user)}
     let!(:task) {FactoryBot.create(:task, name: "task_name1", status: "未着手", user: user)}
     let!(:second_task) {FactoryBot.create(:task, name: "sample_1", status: "着手中", user: user)}
-    let!(:third_task) {FactoryBot.create(:task, name: "sample_2", status: "完了", user: user)}
+    let!(:third_task) {FactoryBot.create(:task, name: "sample_2", status: "完了", user: user, labels: [label])}
+    let!(:label) {FactoryBot.create(:label)}
     before do
       visit new_session_path
       fill_in "session_email", with: '1ban@mail.com'
@@ -138,11 +140,20 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'e_1'
       end
     end
-    context 'タイトルのあいまい検索とステータス検索をした場合' do
-      it "検索キーワードをタイトルに含み、かつステータスに完全一致するタスク絞り込まれる" do
+    context 'ラベル検索をした場合' do
+      it "ラベルに完全一致するタスクが絞り込まれる" do
+        visit tasks_path
+        select "label", from: 'task[label_id]'
+        click_button "絞り込み"
+        expect(page).to have_content 'sample_2'
+      end
+    end
+    context 'タイトルのあいまい検索とステータス検索とラベル検索をした場合' do
+      it "検索キーワードをタイトルに含み、かつステータスに完全一致し、かつラベルに完全一致するタスク絞り込まれる" do
         visit tasks_path
         fill_in "task[name]", with: 'ple'
         select "完了", from: 'task[status]'
+        select "label", from: 'task[label_id]'
         click_button "絞り込み"
         expect(page).to have_content 'sample_2'
       end
