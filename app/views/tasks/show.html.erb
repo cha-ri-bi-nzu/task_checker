@@ -5,6 +5,12 @@
   <p>終了期限：<%= l @task.time_limit, format: :long %></p>
   <p>進捗：<%= @task.status %></p>
   <p>概要：<%= @task.content %></p>
+  <p>ラベル：
+    <% @task.label_ids.each do |label| %>
+      <%= Label.find(label).name %> ,　
+    <% end %>
+  </p>
+
 
   <%= link_to "編集", edit_task_path %>|
   <%= link_to "タスク一覧へ", tasks_path %>
