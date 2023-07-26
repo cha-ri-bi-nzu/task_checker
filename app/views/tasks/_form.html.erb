@@ -28,7 +28,13 @@
     <br>
     <%= f.label :" 概要 ：" %>
     <%= f.text_area :content %>
-  </div>
+    <br>
+    <br>
+    <% Label.all.each do |label| %>
+      <%= f.check_box :label_ids, {multiple: true, checked: label[:checked], disabled: inclde_hidden: false}, label[:id] %>
+      <%= label.name %>
+    <% end %>
+    </div>
   <br>
   <br>
   <% if @task.id.present? %>
