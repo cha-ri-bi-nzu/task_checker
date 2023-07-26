@@ -6,21 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create!(id: 1,
-            name: 'adminmin',
-            email: 'adminno@email.com',
-            password: 'aaaaaa',
-            admin: true
-            )
-# User.create!(id: 40,
-#             name: 'adminmin40',
-#             email: '40@email.com',
-#             password: 'aaaaaa',
-#             admin: true
-#             )
-# User.create!(id: 80,
-#             name: 'adminmin80',
-#             email: '80@email.com',
-#             password: 'aaaaaa',
-#             admin: true
-#             )
+15.times do |n|
+  User.create!(
+      name: "adminmin#{n}",
+      email: "#{n}@email.com",
+      password: "#{n}aaaaaa",
+      admin: true
+  )
+end
+
+15.times do |n|
+  Task.create!(name: "sample_task#{n+1}",
+              content: "#{n+1}番目のサンプルタスク",
+              user_id: 1
+              )
+end
+
+10.times do |n|
+  Label.create!(id: n+1,
+                name: "label#{n+1}#{n+1}"
+                )
+end
