@@ -13,5 +13,5 @@ class Task < ApplicationRecord
 
   belongs_to :user
   has_many :labelings, dependent: :destroy
-  has_many :labeling_labels, through: :labelings, surce: :label
+  has_many :labeling_labels, through: :labelings, source: :label
 end
