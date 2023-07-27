@@ -9,16 +9,11 @@ class TasksController < ApplicationController
       @tasks = @tasks.high_priority_sort
     end
     if params[:task].present?
-      if params[:task][:name].present? && params[:task][:status].present?
-        @tasks = @tasks.status_select(params[:task][:status])
-        @tasks = @tasks.name_select(params[:task][:name])
-      elsif params[:task][:status].present?
-        @tasks = @tasks.status_select(params[:task][:status])
-      elsif params[:task][:name].present?
-        @tasks = @tasks.name_select(params[:task][:name])
-      end
+      @tasks = @tasks.status_select(params[:task][:status]) if params[:task][:status].present?
+      @tasks = @tasks.name_select(params[:task][:name]) if params[:task][:name].present?
+      @tasks = @tasks.joins(:labels).where(labels: {id: params[:task][:label_id]}) if params[:task][:label_id].present?
     end
-    @tasks = @tasks.page(params[:page]).per(10)
+  @tasks = @tasks.page(params[:page]).per(10)
   end
 
   def new
@@ -55,7 +50,7 @@ class TasksController < ApplicationController
 
   private
   def task_params
-    params.require(:task).permit(:name, :time_limit, :status, :priority, :content)
+    params.require(:task).permit(:name, :time_limit, :status, :priority, :content, {label_ids: []})
   end
 
   def set_task
